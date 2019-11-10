@@ -59,15 +59,15 @@ public class Menu {
                         case 2:
                             menuComplejo();/*Utilizar transacciones a la hora de crear Poli/Uni y crear junto a ellos */
                             break;
-    //                    case 3:
-    //                        menuPolideportivo();
-    //                        break;
+                        case 3:
+                            menuPolidep();
+                            break;
                         case 4:
                             menuUnidep();
                             break;
-    //                    case 5:
-    //                        menuEvento();
-    //                        break;
+                        case 5:
+                            menuEvento();
+                            break;
                         case 6:
 
                             menuComisario();
@@ -142,6 +142,55 @@ public class Menu {
             System.out.println(e);
         }
     }
+     private static void menuEvento() {
+        Scanner scSede = new Scanner(System.in);
+        int opcion = 0;
+        try{
+            do {            
+                System.out.println("1.- Añadir Sede");
+                
+                System.out.println("3.- Borrar Sede");
+                System.out.println("4.- Mostrar las Sedes");
+                
+                opcion = scSede.nextInt();
+
+                switch(opcion){
+                    case 1:
+                        Scanner scan=new Scanner(System.in);
+                        Scanner scn = new Scanner(System.in);           
+
+                      
+                        Controlador.crearEvento();
+                        break;
+                    
+                    case 2:
+                        Controlador.borrarEvento();
+                        break;
+                    case 3:
+                        ResultSet resultado;
+                        int nFilas = 0;
+                        resultado = Controlador.mostrarEvento();
+                        System.out.println("LISTADO DE COMPLEJOS");
+                        System.out.println("ID  Nombre Evento    Fecha       id_complejo        id_Area");
+                        while (resultado.next()) {
+                            nFilas++;
+                            System.out.println(resultado.getInt("id") + "   " + resultado.getString("name") + "       " + resultado.getTimestamp("date")+"       "+ resultado.getInt("id_sportcomplex")+ "    " + resultado.getInt("id_area"));
+
+                        }
+                        System.out.println("Se han mostrado " + nFilas + " Notas apuntadas");
+                        break;
+                }
+            } while (opcion < 0 && opcion > 5);
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+    
+    
+    
+    
+   
+    
     
     
     private static void menuComplejo() {
@@ -210,20 +259,70 @@ public class Menu {
                         }
                         break;
                     case 3:
-                        Controlador.borrarSede();
+                        Controlador.borrarUnideportivo();
                         break;
                     case 4:
                         ResultSet resultado;
                         int nFilas = 0;
-                        resultado = Controlador.mostrarSede();
-                        System.out.println("LISTADO DE COMISARIOS");
-                        System.out.println("ID   Nombre    Presupuesto");
+                        resultado = Controlador.mostrarUnideportivo();
+                        System.out.println("LISTADO DE UNIDEPORTIVOS");
+                        System.out.println("ID   Deporte    Informacion");
                         while (resultado.next()) {
                             nFilas++;
-                            System.out.println(resultado.getInt("id") + "   " + resultado.getString("name") + "   " + resultado.getString("budget"));
+                            System.out.println(resultado.getInt("id") + "   " + resultado.getString("sport") + "   " + resultado.getString("information"));
 
                         }
-                        System.out.println("Se han mostrado " + nFilas + " Notas apuntadas");
+                        System.out.println("Se han mostrado " + nFilas + " Unideportivos apuntadas");
+                        break;
+                }
+            } while (opcion < 0 && opcion > 5);
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+    
+    private static void menuPolidep() {
+        Scanner scSede = new Scanner(System.in);
+        int opcion = 0;
+        try{
+            do {            
+                System.out.println("1.- Añadir Complejo Polideportivo");
+                System.out.println("2.- Modificar Complejo Polideportivo");
+                System.out.println("3.- Borrar Complejo Polideportivo");
+                System.out.println("4.- Mostrar Complejo Polideportivo");
+                
+                opcion = scSede.nextInt();
+
+                switch(opcion){
+                    case 1:
+                        Scanner scan=new Scanner(System.in);
+                        Scanner scn = new Scanner(System.in);           
+
+                        
+                        Controlador.crearPolideportivo();
+                        break;
+                    case 2:
+                        if(Controlador.modificarPolideportivo()){
+                            System.out.println("Polideportivo modificado CORRECTAMENTE");
+                        }else{
+                            System.out.println("ERROR");
+                        }
+                        break;
+                    case 3:
+                        Controlador.borrarPolideportivo();
+                        break;
+                    case 4:
+                        ResultSet resultado;
+                        int nFilas = 0;
+                        resultado = Controlador.mostrarPolideportivo();
+                        System.out.println("LISTADO DE POLIDEPORTIVOS");
+                        System.out.println("ID    Informacion");
+                        while (resultado.next()) {
+                            nFilas++;
+                            System.out.println(resultado.getInt("id") + "   " + resultado.getString("information"));
+
+                        }
+                        System.out.println("Se han mostrado " + nFilas + " Unideportivos apuntadas");
                         break;
                 }
             } while (opcion < 0 && opcion > 5);

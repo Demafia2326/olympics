@@ -83,7 +83,7 @@ public class AreaDAO {
     
     public static void modificar(int id,String local,String deporte,int id_m) throws SQLException{
                
-        String lineaSQL="UPDATE area SET id_multisportcenter='"+id_m+"',name='"+local+"', dni='"+deporte+"' WHERE id="+id;
+        String lineaSQL="UPDATE area SET id_multisportcenter='"+id_m+"',name='"+local+"', dni='"+deporte+"' WHERE id="+id+";";
         Conexion.getInstance().execute_All(lineaSQL);      
     }
     

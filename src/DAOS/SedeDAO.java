@@ -84,7 +84,7 @@ public class SedeDAO {
     
     public static void modificarSede(int id,String name,float budget) throws SQLException{
                
-        String lineaSQL="UPDATE headquarter SET name='"+name+"', budget='"+budget+"' WHERE id="+id;
+        String lineaSQL="UPDATE headquarter SET name='"+name+"', budget='"+budget+"' WHERE id="+id+";";
         Conexion.getInstance().execute_All(lineaSQL);      
     }
     

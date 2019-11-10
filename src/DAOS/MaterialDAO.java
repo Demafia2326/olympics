@@ -71,7 +71,7 @@ public class MaterialDAO {
     
     public static ResultSet mostrarTodas() throws SQLException {     
         int nFilas = 0;
-        String lineaSQL = "Select * from sportcenter;" ;
+        String lineaSQL = "Select * from equipment;" ;
         ResultSet resultado = Conexion.getInstance().execute_Select(lineaSQL);
         
         return resultado;

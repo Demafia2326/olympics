@@ -25,6 +25,12 @@ public class Comisario {
         this.nombre = nombre;
         this.dni = dni;
     }
+
+    public Comisario(int codigo) {
+        this.codigo = codigo;
+    }
+    
+    
     
     
 

@@ -5,11 +5,9 @@
  */
 package DAOS;
 
-import static DAOS.ComisarioDAO.miConexion;
-import Modelo.Comisario;
 import Modelo.Complejo;
 import Modelo.Conexion;
-import Modelo.Material;
+import Modelo.Polideportivo;
 import Modelo.Unideportivo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,22 +17,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import sun.applet.Main;
 
-
 /**
  *
  * @author Daniel Pérez Ramírez
  */
-public class UnideportivoDAO {
-    
+public class PolideportivoDAO {
      public static Conexion miConexion= Conexion.getInstance();
     
-     public static boolean crear(Unideportivo a) throws SQLException {        
+     public static boolean crear(Polideportivo a) throws SQLException {        
 
         boolean correcto = true;
         int i;
         int id = 0;
         try{
-        Unideportivo uni;
+        Polideportivo uni;
         Complejo complex;
         //Cadena donde irán las sentencias sql de creación de tablas
         
@@ -44,10 +40,13 @@ public class UnideportivoDAO {
         
         miConexion.getConexion().setAutoCommit(false);
         
+        
+
+        
         String sentenciaComplejo = "INSERT INTO sportcomplex (location ,boss, id_headquarter )"
                     + "VALUES (?,?,?)";
 
-            String sentenciaUnideportivo = "INSERT INTO sportcenter (id_sportcomplex, sport , information )"
+            String sentenciaUnideportivo = "INSERT INTO multisportcenter (id_sportcomplex, sport , information )"
                     + "VALUES (?,?,?)";
 
             PreparedStatement psUni, psCom;
@@ -63,8 +62,7 @@ public class UnideportivoDAO {
 
             psUni = Conexion.getInstance().getConexion().prepareStatement(sentenciaUnideportivo, PreparedStatement.RETURN_GENERATED_KEYS);
             psUni.setInt(1, id);
-            psUni.setString(2, a.getDeporte());
-            psUni.setString(3, a.getInfo());
+            psUni.setString(2, a.getInfo());
             psUni.executeUpdate();
             Conexion.getInstance().getConexion().commit();
             
@@ -100,9 +98,9 @@ public class UnideportivoDAO {
      
     
      
-    public static ResultSet mostrar(Unideportivo m) throws SQLException {     //Que pida un nombre y lo busque
+    public static ResultSet mostrar(Polideportivo m) throws SQLException {     //Que pida un nombre y lo busque
         int nFilas = 0;
-        String lineaSQL = "Select * from sportcenter WHERE sport LIKE '"+ m.getDeporte()+"';" ;
+        String lineaSQL = "Select * from multisportcenter WHERE id_sportcomplex LIKE '"+ m.getCod_Complejo()+"';" ;
         ResultSet resultado = Conexion.getInstance().execute_Select(lineaSQL);
        
         return resultado;
@@ -111,25 +109,23 @@ public class UnideportivoDAO {
     
     public static ResultSet mostrarTodas() throws SQLException {     
         int nFilas = 0;
-        String lineaSQL = "Select * from sportcenter;" ;
+        String lineaSQL = "Select * from multisportcenter;" ;
         ResultSet resultado = Conexion.getInstance().execute_Select(lineaSQL);
         
         return resultado;
     }
-    public static void modificar(int id,String m,String i) throws SQLException{
+    public static void modificar(int id,String i) throws SQLException{
                
-        String lineaSQL="UPDATE sportcenter SET sport='"+m+"' , information='"+i+"'  WHERE id_sportcomplex="+id+";";
+        String lineaSQL="UPDATE multisportcenter SET information='"+i+"'  WHERE id_sportcomplex="+id+";";
         Conexion.getInstance().execute_All(lineaSQL);      
     }
     
     
-    public static void borrar(Unideportivo m) throws SQLException {   
+    public static void borrar(Polideportivo m) throws SQLException {   
         
-            String lineaSQL = "DELETE FROM sportcenter WHERE id_sportcomplex LIKE '"+m.getCod_Complejo()+"';" ;
+            String lineaSQL = "DELETE FROM multisportcenter WHERE id_sportcomplex LIKE '"+m.getCod_Complejo()+"';" ;
             Conexion.getInstance().execute_All(lineaSQL);
             String lineaSQL2 = "DELETE FROM sportcomplex WHERE id LIKE '"+m.getCod_Complejo()+"';" ;
             Conexion.getInstance().execute_All(lineaSQL2);
     }
-    
-     
-}   
+}

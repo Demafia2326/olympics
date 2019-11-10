@@ -17,6 +17,21 @@ public class Polideportivo extends Complejo{
         this.cod_Complejo = cod_Complejo;
         this.info = info;
     }
+
+    public Polideportivo(int cod_Complejo) {
+        this.cod_Complejo = cod_Complejo;
+    }
+
+    public Polideportivo(String info, String localizacion, String jefe, int cod_sede) {
+        super(localizacion, jefe, cod_sede);
+        this.info = info;
+    }
+    
+    
+
+    
+    
+    
     
     
 

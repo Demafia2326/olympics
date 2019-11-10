@@ -84,7 +84,7 @@ public class ComisarioDAO {
     
     public static void modificarComisario(int id,String name,String dni) throws SQLException{
                
-        String lineaSQL="UPDATE commissioner SET name='"+name+"', dni='"+dni+"' WHERE id="+id;
+        String lineaSQL="UPDATE commissioner SET name='"+name+"', dni='"+dni+"' WHERE id="+id+";";
         Conexion.getInstance().execute_All(lineaSQL);      
     }
     

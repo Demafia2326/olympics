@@ -8,12 +8,17 @@ package Controlador;
 import DAOS.AreaDAO;
 import DAOS.ComisarioDAO;
 import DAOS.ComplejoDAO;
+import DAOS.EventoDAO;
 import DAOS.MaterialDAO;
+import DAOS.PolideportivoDAO;
 import DAOS.SedeDAO;
 import DAOS.UnideportivoDAO;
 import Modelo.Area;
+import Modelo.Comisario;
 import Modelo.Complejo;
+import Modelo.Evento;
 import Modelo.Material;
+import Modelo.Polideportivo;
 import Modelo.Unideportivo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -457,13 +462,13 @@ ________________________________________________________________________________
         switch(op){
             case 1:
                 Scanner scn = new Scanner(System.in);
-                System.out.println("Especifique el material");
+                System.out.println("Especifique el Deporte de ese complejo");
                 String l = scn.nextLine();
                 
-                Material m= new Material(l);
-                resultado = MaterialDAO.mostrar(m);  
+                Unideportivo m= new Unideportivo(l);
+                resultado = UnideportivoDAO.mostrar(m);  
             case 2:
-                resultado = MaterialDAO.mostrarTodas();
+                resultado = UnideportivoDAO.mostrarTodas();
         }
         return resultado;
        
@@ -532,16 +537,123 @@ ________________________________________________________________________________
         boolean yep=false;
         Scanner scn=new Scanner(System.in);       
         
-        System.out.println("Especifique Material para BORRAR");
-        String l = scn.nextLine();
+        System.out.println("Especifique la id del Complejo para BORRAR");
+        int l = scn.nextInt();
     
-        Material m= new Material(l);
+        Unideportivo m= new Unideportivo(l);
         
         
         if("".equals(l)){
             System.out.println("Non comand recibed");
         }else{
-            MaterialDAO.borrar(m);
+            UnideportivoDAO.borrar(m);
+            yep = true;
+        }
+       
+        return yep;
+        
+    }
+    
+    //_______________________________________________________________________________________________________________________________________________________________________________
+    
+    
+    
+     public static ResultSet mostrarPolideportivo() throws SQLException{
+        
+        ResultSet resultado= null;
+        
+        System.out.println("¿Desea mostrar todos o solo buscar por nombre?");
+        System.out.println("1.- Por Nombre");
+        System.out.println("2.- Todos");
+        int op = scan.nextInt();
+        
+        
+        switch(op){
+            case 1:
+                Scanner scn = new Scanner(System.in);
+                System.out.println("Especifique la ID de ese complejo");
+                int l = scn.nextInt();
+                
+                Polideportivo m= new Polideportivo(l);
+                resultado = PolideportivoDAO.mostrar(m);  
+            case 2:
+                resultado = PolideportivoDAO.mostrarTodas();
+        }
+        return resultado;
+       
+    }
+    
+    public static boolean crearPolideportivo() throws SQLException{
+        boolean yep=false;
+        Scanner scn=new Scanner(System.in);  
+        
+        
+        System.out.println("Introduzca Informacion sobre el deporte: ");
+        String a = scn.nextLine();
+        
+        
+        System.out.println("Introduzca la localización del complejo: ");
+        String c = scn.nextLine();
+        System.out.println("Introduzca Jefe: ");
+        String s = scn.nextLine();
+        System.out.println("Introduzca id de la sede a la que pertenece ");
+        int f = scn.nextInt();
+        
+        Complejo com = new Complejo(c,s,f);
+        
+        Polideportivo un = new Polideportivo(a,c,s,f);
+       
+
+        
+        if("".equals(c)){
+            System.out.println("Non comand recibed");
+        }else{
+            PolideportivoDAO.crear(un);
+            yep = true;
+        }
+        return yep;
+    }
+    
+    public static boolean modificarPolideportivo() throws SQLException{
+        boolean yep=false;
+        Scanner scn=new Scanner(System.in);
+        
+        
+        System.out.println("Introduzca el ID del Complejo que vaya a cambiar");
+        int id=scn.nextInt();
+
+        
+        
+        
+        System.out.println("Introduzca nueva informacion: ");
+        String i = scan.nextLine();
+        
+
+        if("".equals(id)){
+            System.out.println("Non comand recibed");
+        }else{
+            PolideportivoDAO.modificar(id,i);
+            yep = true;
+        }
+       
+        return yep;
+        
+    }
+    
+    public static boolean borrarPolideportivo() throws SQLException{
+        boolean yep=false;
+        Scanner scn=new Scanner(System.in);       
+        
+        System.out.println("Especifique la id del Complejo para BORRAR");
+        int l = scn.nextInt();
+    
+        Polideportivo m= new Polideportivo(l);
+        
+        
+        if("".equals(l)){
+            System.out.println("Non comand recibed");
+        }else{
+            PolideportivoDAO.borrar(m);
             yep = true;
         }
        
@@ -551,11 +663,90 @@ ________________________________________________________________________________
 
     
     
+    //______________________________________________________________________________________________________________________________________________
     
     
     
+    public static ResultSet mostrarEvento() throws SQLException{
+        
+        ResultSet resultado= null;
+        
+        resultado = EventoDAO.mostrarTodas();
+
+        return resultado;
+       
+    }
     
+    public static boolean crearEvento() throws SQLException{
+        boolean yep=false;
+        Scanner scn=new Scanner(System.in);  
+        
+        
+        System.out.println("Introduzca Nombre del evento: ");
+        String a = scn.nextLine();
+        
+        System.out.println("Introduzca una fecha: ");
+        String f = scn.nextLine();
+        
+        System.out.println("Introduzca id del coplejo donde se celebra: ");
+        int id_com = scn.nextInt();
+        
+        System.out.println("Introduzca la id del area donde se celebra en caso de que sea un complejo polideportivo: ");
+        int id_a = scn.nextInt();
+        /*
+        System.out.println("Cuantos comisarios va a añadir al evento?");
+        int cont=scan.nextInt();
+        for(int i=0;i<cont+1;i++){
+            
+        }
+        */
+        System.out.println("Introduzca id del comisario que asista al evento: ");
+        int c = scn.nextInt();
+        System.out.println("Introduzca su rol: ");
+        String s = scn.nextLine();
+        System.out.println("Introduzca id del material a usar ");
+        int fa = scn.nextInt();
+        
+        Comisario co= new Comisario(c);
+        
+        Evento e = new Evento(a,id_com,f);
+       
+        
+        
+       
+
+        
+        if("".equals(c)){
+            System.out.println("Non comand recibed");
+        }else{
+            EventoDAO.crear(e,co,s,id_a,fa);
+            yep = true;
+        }
+        return yep;
+    }
     
+   
+    
+    public static boolean borrarEvento() throws SQLException{
+        boolean yep=false;
+        Scanner scn=new Scanner(System.in);       
+        
+        System.out.println("Especifique la id del Evento para BORRAR");
+        int l = scn.nextInt();
+    
+        Evento m= new Evento(l);
+        
+        
+        if("".equals(l)){
+            System.out.println("Non comand recibed");
+        }else{
+            EventoDAO.borrar(m);
+            yep = true;
+        }
+       
+        return yep;
+        
+    }
     
     
     

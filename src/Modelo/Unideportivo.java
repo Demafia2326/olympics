@@ -26,6 +26,17 @@ public class Unideportivo extends Complejo{
         this.info = info;
     }
 
+    public Unideportivo(String deporte) {
+        this.deporte = deporte;
+    }
+
+    public Unideportivo(int cod_Complejo) {
+        this.cod_Complejo = cod_Complejo;
+    }
+    
+    
+    
+
     
     
     

@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Daniel Pérez Ramírez
  */
-public class Evento {
+public class Evento{
     
     private int codigo;
     private String nombre;
@@ -34,6 +34,12 @@ public class Evento {
         this.cod_complejo = cod_complejo;
         this.fecha = fecha;
     }
+
+    public Evento(int codigo) {
+        this.codigo = codigo;
+    }
+    
+    
     
     
 
